@@ -59,26 +59,28 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-//            Consumer<LoginModel>(
-//              builder: (context, loginModel, _) {
-//                return Text(
-//                  loggedIn ? 'You are logged in!' : 'You are logged OUT!!!',
-//                );
-//              }
-//            )
-            Text(
-              loggedIn ? 'You are logged in!' : 'You are logged OUT!!!',
-            )
+            Consumer<LoginModel>(
+              builder: (context, loginModel, _) {
+                return Text(
+                  loginModel.loggedIn ?? false ? 'You are logged in!' : 'You are logged OUT!!!',
+                );
+              }
+            ),
+//            Text(
+//              loggedIn ? 'You are logged in!' : 'You are logged OUT!!!',
+//            ),
 
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          if (loggedIn)
+          if (loggedIn) {
             Provider.of<LoginModel>(context, listen: false).logOut();
-          else
+          }
+          else {
             Provider.of<LoginModel>(context, listen: false).logIn();
+          }
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),
