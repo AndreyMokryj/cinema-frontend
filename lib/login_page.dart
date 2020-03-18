@@ -12,7 +12,8 @@ class LoginPage extends StatelessWidget{
       floatingActionButton: FloatingActionButton(
         onPressed: (){
           Provider.of<LoginModel>(context, listen: false).logIn();
-          Navigator.of(context).pushNamed('/main');
+          Navigator.of(context).pushNamed('/');
+//          Navigator.of(context).pop();
         },
       ),
     );
