@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 class LoginPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
+    Provider.of<LoginModel>(context, listen: false).logOut();
+
     return Scaffold(
       body: Center(
         child: Text("Login"),

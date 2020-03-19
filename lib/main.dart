@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: HomePage(),
+        home: MainPage(),
         initialRoute: '/',
         onGenerateRoute: _getRoute,
       ),
@@ -29,8 +29,10 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
-  HomePage({Key key}) : super(key: key);
+class MainPage extends StatelessWidget {
+  final String name;
+
+  MainPage({Key key, this.name = "home"}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,18 @@ class HomePage extends StatelessWidget {
         Navigator.of(context).pushNamed("/login");
       }
     });
-    return TicketsList();
+    if (loggedIn) {
+      switch (name) {
+        case 'cart':
+          return ShoppingCart();
+          break;
+        default:
+          return TicketsList();
+      }
+    }
+    else {
+      return Container();
+    }
   }
 }
 
@@ -49,13 +62,15 @@ Route<dynamic> _getRoute(RouteSettings settings) {
   Widget page;
   switch (settings.name) {
     case '/' :
-      page = HomePage();
+      page = MainPage();
       break;
     case '/login' :
       page = LoginPage();
       break;
     case '/cart' :
-      page = ShoppingCart();
+      page = MainPage(
+        name: 'cart',
+      );
       break;
   }
 
