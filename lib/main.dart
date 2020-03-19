@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutterappweb/login_model.dart';
-import 'package:flutterappweb/login_page.dart';
+import 'package:flutterappweb/views/login_page.dart';
 import 'package:flutterappweb/views/shopping_cart.dart';
+import 'package:flutterappweb/views/signup_page.dart';
 import 'package:flutterappweb/views/tickets_list.dart';
 import 'package:provider/provider.dart';
 
@@ -66,6 +67,9 @@ Route<dynamic> _getRoute(RouteSettings settings) {
       break;
     case '/login' :
       page = LoginPage();
+      break;
+    case '/signup' :
+      page = SignupPage();
       break;
     case '/cart' :
       page = MainPage(

@@ -1,40 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutterappweb/constants/styles.dart';
 import 'package:flutterappweb/login_model.dart';
 import 'package:provider/provider.dart';
 
-class LoginPage extends StatelessWidget{
+class SignupPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    Provider.of<LoginModel>(context, listen: false).logOut();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      Provider.of<LoginModel>(context, listen: false).logOut();
+    });
 
-//    return Scaffold(
-//      body: Center(
-//        child: Text("Login"),
-//      ),
-////      floatingActionButton: FloatingActionButton(
-////        onPressed: (){
-////          Provider.of<LoginModel>(context, listen: false).logIn();
-////          Navigator.of(context).pushNamed('/');
-////        },
-////      ),
-//    );
-
-    return WillPopScope(
-      onWillPop: (){
-        Navigator.of(context).pushNamed('/');
-      },
-      child: Scaffold(
-//      key: _scaffoldKey,
-//      appBar: AppBar(
-//        elevation: 0,
-//        //title: Text('Вход My Coffee Factory',
-//        title: Text('Вход',
-//          style: TextStyle(fontFamily: 'PT Sans', fontSize: 16.0,),
-//        ),
-//        centerTitle: true,
-//        actions: <Widget>[],
-//      ),
+    return Scaffold(
         body: SafeArea(
           child: Stack(children: <Widget>[Form(
 //          key: _formKey,
@@ -87,28 +64,17 @@ class LoginPage extends StatelessWidget{
                   FlatButton(
                     //text: 'Войти',
                     child: Text(
-                      'Войти'
+                      'Зарегистрироваться'
                     ),
                     onPressed: (){
-                      Provider.of<LoginModel>(context, listen: false).logIn();
-                      Navigator.of(context).pushNamed('/');
+                      Navigator.of(context).pushNamed('/login');
                     }
                   ),
-                  const SizedBox(height: 11.0),
-                  const SizedBox(height: 27.0),
-                  FlatButton(
-                    child: Text('Зарегистрироваться',
-                      style: TextStyle(fontFamily: 'PT Sans',
-                        fontSize: 14.0,
-                        color: Colors.black),),
-                    onPressed: () => Navigator.of(context).pushNamed('/signup'),
-                  )
                 ],
               ))
           ),
           ],)
         ),
-      ),
-    );
+      );
   }
 }
