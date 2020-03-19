@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutterappweb/login_model.dart';
 import 'package:flutterappweb/login_page.dart';
-import 'package:flutterappweb/shopping_cart.dart';
-import 'package:flutterappweb/tickets_list.dart';
+import 'package:flutterappweb/views/shopping_cart.dart';
+import 'package:flutterappweb/views/tickets_list.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(
