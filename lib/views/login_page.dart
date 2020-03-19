@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutterappweb/constants/styles.dart';
-import 'package:flutterappweb/login_model.dart';
+import 'package:flutterappweb/helpers/styles.dart';
+import 'package:flutterappweb/model/login_model.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget{

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutterappweb/login_model.dart';
+import 'package:flutterappweb/model/login_model.dart';
 import 'package:flutterappweb/views/login_page.dart';
 import 'package:flutterappweb/views/shopping_cart.dart';
 import 'package:flutterappweb/views/signup_page.dart';
