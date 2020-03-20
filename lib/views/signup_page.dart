@@ -69,7 +69,7 @@ class SignupPage extends StatelessWidget{
                       'Зарегистрироваться'
                     ),
                     onPressed: () {
-                      var success = DBProvider.db.newUser(User("admin", "admin"));
+                      var success = DBProvider.db.newUser(User(username: "admin", password:"admin"));
                       if(success) {
                         Navigator.of(context).pushNamed('/login');
                       }

@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutterappweb/database/database.dart';
 import 'package:flutterappweb/helpers/styles.dart';
 import 'package:flutterappweb/model/login_model.dart';
+import 'package:flutterappweb/model/user_model.dart';
 import 'package:provider/provider.dart';
 
-class LoginPage extends StatelessWidget{
+class LoginPage extends StatefulWidget{
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+
+  User newUser = User();
+
   @override
   Widget build(BuildContext context) {
     SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -16,19 +27,9 @@ class LoginPage extends StatelessWidget{
         Navigator.of(context).pushNamed('/');
       },
       child: Scaffold(
-//      key: _scaffoldKey,
-//      appBar: AppBar(
-//        elevation: 0,
-//        //title: Text('Вход My Coffee Factory',
-//        title: Text('Вход',
-//          style: TextStyle(fontFamily: 'PT Sans', fontSize: 16.0,),
-//        ),
-//        centerTitle: true,
-//        actions: <Widget>[],
-//      ),
         body: SafeArea(
           child: Stack(children: <Widget>[Form(
-//          key: _formKey,
+          key: _formKey,
             child: SingleChildScrollView(padding: EdgeInsets.all(10.0),
               child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
@@ -49,9 +50,7 @@ class LoginPage extends StatelessWidget{
 //                    fieldError('username', val.isEmpty ? AppLocalizations.of(
 //                      context).localizedText('signInNoLoginError') : null),
                     autovalidate: true,
-                    onSaved: (val) =>
-                    {}
-                    ,
+                    onSaved: (val) => newUser.username = val,
                   ),
                   const SizedBox(height: 20.0),
                   TextFormField(
@@ -70,9 +69,8 @@ class LoginPage extends StatelessWidget{
 //                    fieldError('password', val.isEmpty ? AppLocalizations.of(
 //                      context).localizedText('signInNoPasswordError') : null),
                     autovalidate: true,
-                    onSaved: (val) =>
-                    {}
-                    ,
+                    onSaved: (val) => newUser.password = val,
+
                   ),
                   const SizedBox(height: 20.0),
                   FlatButton(
@@ -80,10 +78,8 @@ class LoginPage extends StatelessWidget{
                     child: Text(
                       'Войти'
                     ),
-                    onPressed: (){
-                      Provider.of<LoginModel>(context, listen: false).logIn();
-                      Navigator.of(context).pushNamed('/');
-                    }
+                    onPressed: () => _submit(),
+
                   ),
                   const SizedBox(height: 11.0),
                   const SizedBox(height: 27.0),
@@ -101,5 +97,14 @@ class LoginPage extends StatelessWidget{
         ),
       ),
     );
+  }
+
+  void _submit() {
+    final FormState form = _formKey.currentState;
+    form.save();
+    if (DBProvider.db.checkUser(newUser)) {
+      Provider.of<LoginModel>(context, listen: false).logIn();
+      Navigator.of(context).pushNamed('/');
+    }
   }
 }
