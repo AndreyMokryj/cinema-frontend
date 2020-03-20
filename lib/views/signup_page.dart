@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutterappweb/database/database.dart';
 import 'package:flutterappweb/helpers/styles.dart';
-import 'package:flutterappweb/model/User.dart';
 import 'package:flutterappweb/model/login_model.dart';
+import 'package:flutterappweb/model/user_model.dart';
 import 'package:provider/provider.dart';
 
 class SignupPage extends StatelessWidget{
@@ -69,8 +69,10 @@ class SignupPage extends StatelessWidget{
                       'Зарегистрироваться'
                     ),
                     onPressed: () {
-                      DBProvider.db.newUser(User("admin", "admin"));
-                      Navigator.of(context).pushNamed('/login');
+                      var success = DBProvider.db.newUser(User("admin", "admin"));
+                      if(success) {
+                        Navigator.of(context).pushNamed('/login');
+                      }
                     }
                   ),
                 ],
