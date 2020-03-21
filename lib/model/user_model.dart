@@ -10,8 +10,4 @@ class User{
       'password' : password,
     };
   }
-
-  String toJson(){
-    return '{"username" : "$username", "password" : "$password"}';
-  }
 }
