@@ -89,10 +89,10 @@ class _SignupPageState extends State<SignupPage> {
       );
   }
 
-  void _submit() {
+  void _submit() async {
     final FormState form = _formKey.currentState;
     form.save();
-    if (DBProvider.db.newUser(newUser)) {
+    if (await DBProvider.db.newUser(newUser)) {
       Navigator.of(context).pushNamed('/login');
     }
   }

@@ -99,10 +99,11 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _submit() {
+  void _submit() async {
     final FormState form = _formKey.currentState;
     form.save();
-    if (DBProvider.db.checkUser(newUser)) {
+    bool s = await DBProvider.db.checkUser(newUser);
+    if (s) {
       Provider.of<LoginModel>(context, listen: false).logIn();
       Navigator.of(context).pushNamed('/');
     }

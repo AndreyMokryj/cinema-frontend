@@ -1,40 +1,37 @@
+import 'dart:convert';
 import 'package:flutterappweb/model/user_model.dart' as u;
+import 'package:http/http.dart' as http;
 
 class DBProvider {
   DBProvider._();
 
   static final DBProvider db = DBProvider._();
 
-  Map<String, u.User> _usermaps = {};
+  Future<bool> newUser(u.User user) async {
+    final response = await http.post(
+      "$baseUrl",
+      body: jsonEncode(user.toMap()),
+      headers: {
+        'content-type': 'application/json'
+      }
+    );
 
-//  Map<String, u.User> get users {
-//    if (_users == null){
-//      initDB();
-//    }
-//    return _users;
-//  }
-//  
-//  void initDB() {
-//    _users = {};
-//  }
-
-  bool newUser(u.User user) {
-    if (_usermaps.containsKey(user.username)){
-      return false;
-    }
-    _usermaps.addAll({
-      user.username : user,
-    });
-    return true;
+    final responseBody = jsonDecode(response.body);
+    return responseBody;
   }
 
-  bool checkUser(u.User user) {
-    if (!(_usermaps.containsKey(user.username))){
-      return false;
-    }
-    if(_usermaps[user.username].password == user.password){
-      return true;
-    }
-    return false;
+  Future<bool> checkUser(u.User user) async {
+    final response = await http.post(
+      "${baseUrl}check/",
+      body: jsonEncode(user.toMap()),
+      headers: {
+        'content-type': 'application/json'
+      }
+    );
+
+    final responseBody = jsonDecode(response.body);
+    return responseBody;
   }
 }
+
+final baseUrl = "http://localhost:4444/users/";
