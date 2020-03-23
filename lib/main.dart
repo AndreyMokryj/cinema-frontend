@@ -67,7 +67,9 @@ Route<dynamic> _getRoute(RouteSettings settings) {
   Widget page;
   switch (settings.name) {
     case '/' :
-      page = MainPage();
+      page = MainPage(
+        name: 'home',
+      );
       break;
     case '/login' :
       page = LoginPage();

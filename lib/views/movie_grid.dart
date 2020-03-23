@@ -8,8 +8,15 @@ class MovieGrid extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text("Movie ${movie.name} / ${movie.nameOriginal}"),
+    return FlatButton(
+      padding: EdgeInsets.zero,
+      child: Column(
+        children: <Widget>[
+          Expanded(child: Image.network(movie.imageLink,)),
+          Text("${movie.name} /\n${movie.nameOriginal}"),
+        ],
+      ),
+      onPressed: (){},
     );
   }
 }

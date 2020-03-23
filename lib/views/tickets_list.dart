@@ -15,7 +15,7 @@ class TicketsList extends StatelessWidget{
             padding: EdgeInsets.all(5),
             child: GridView.count(
               crossAxisSpacing: 5,
-              mainAxisSpacing: 5,
+              mainAxisSpacing: 20,
               crossAxisCount: 3,
               children: movieMaps.map((e) => MovieGrid(
                 movie: Movie.fromMap(e),
