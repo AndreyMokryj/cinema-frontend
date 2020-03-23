@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutterappweb/model/login_model.dart';
 import 'package:flutterappweb/views/login_page.dart';
+import 'package:flutterappweb/views/main_view.dart';
 import 'package:flutterappweb/views/shopping_cart.dart';
 import 'package:flutterappweb/views/signup_page.dart';
 import 'package:flutterappweb/views/tickets_list.dart';
@@ -45,13 +46,16 @@ class MainPage extends StatelessWidget {
       }
     });
     if (loggedIn) {
-      switch (name) {
-        case 'cart':
-          return ShoppingCart();
-          break;
-        default:
-          return TicketsList();
-      }
+//      switch (name) {
+//        case 'cart':
+//          return ShoppingCart();
+//          break;
+//        default:
+//          return TicketsList();
+//      }
+      return MainView(
+        name: name,
+      );
     }
     else {
       return Container();
