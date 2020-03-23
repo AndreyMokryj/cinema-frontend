@@ -1,31 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:flutterappweb/model/login_model.dart';
-import 'package:provider/provider.dart';
+import 'package:flutterappweb/database/database.dart';
+import 'package:flutterappweb/model/movie_model.dart';
+import 'package:flutterappweb/views/movie_grid.dart';
 
 class TicketsList extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-//    return
-////      WillPopScope(
-////      onWillPop: (){
-//////        Navigator.of(context).pop(false);
-////      },
-////      child:
-//      Scaffold(
-//        body:
-//        Center(
-//          child: Text("List of tickets"),
-//        ),
-//        floatingActionButton: FloatingActionButton(
-//          onPressed: (){
-//            Provider.of<LoginModel>(context, listen: false).logOut();
-//            Navigator.of(context).pushNamed('/login');
-//          },
-//        ),
-////      ),
-//    );
-    return Center(
-      child: Text("List of tickets"),
+    return FutureBuilder(
+      future: DBProvider.db.getMovies(),
+      builder:(context, snapshot) {
+        if (snapshot.hasData) {
+          final movieMaps = snapshot.data as List;
+          return Container(
+            padding: EdgeInsets.all(5),
+            child: GridView.count(
+              crossAxisSpacing: 5,
+              mainAxisSpacing: 5,
+              crossAxisCount: 3,
+              children: movieMaps.map((e) => MovieGrid(
+                movie: Movie.fromMap(e),
+              )).toList(),
+            ),
+          );
+        }
+        else {
+          return Container();
+        }
+      }
     );
   }
 }

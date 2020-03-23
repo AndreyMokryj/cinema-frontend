@@ -47,12 +47,12 @@ class MainView extends StatelessWidget {
             ),
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: (){
-            Provider.of<LoginModel>(context, listen: false).logOut();
-            Navigator.of(context).pushNamed('/login');
-          },
-        ),
+//        floatingActionButton: FloatingActionButton(
+//          onPressed: (){
+//            Provider.of<LoginModel>(context, listen: false).logOut();
+//            Navigator.of(context).pushNamed('/login');
+//          },
+//        ),
       ),
     );
   }
