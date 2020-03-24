@@ -70,4 +70,16 @@ class DBProvider {
     final responseBody = jsonDecode(response.body);
     return responseBody;
   }
+
+  Future<List> getPlaces(int sessionId) async {
+    final response = await http.get(
+      "${baseUrl}places/sid/$sessionId",
+      headers: {
+        'content-type': 'application/json'
+      }
+    );
+
+    final responseBody = jsonDecode(response.body);
+    return responseBody;
+  }
 }
