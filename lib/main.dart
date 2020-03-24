@@ -33,8 +33,9 @@ class MyApp extends StatelessWidget {
 
 class MainPage extends StatelessWidget {
   final String name;
+  final int movieId;
 
-  MainPage({Key key, this.name = "home"}) : super(key: key);
+  MainPage({Key key, this.name = "home", this.movieId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,15 +47,10 @@ class MainPage extends StatelessWidget {
       }
     });
     if (loggedIn) {
-//      switch (name) {
-//        case 'cart':
-//          return ShoppingCart();
-//          break;
-//        default:
-//          return TicketsList();
-//      }
+
       return MainView(
         name: name,
+        movieId: movieId,
       );
     }
     else {
@@ -65,23 +61,33 @@ class MainPage extends StatelessWidget {
 
 Route<dynamic> _getRoute(RouteSettings settings) {
   Widget page;
-  switch (settings.name) {
-    case '/' :
-      page = MainPage(
-        name: 'home',
-      );
-      break;
-    case '/login' :
-      page = LoginPage();
-      break;
-    case '/signup' :
-      page = SignupPage();
-      break;
-    case '/cart' :
-      page = MainPage(
-        name: 'cart',
-      );
-      break;
+  final path = settings.name;
+  if(path.startsWith('/details/')){
+    String id = path.substring(9);
+    page = MainPage(
+      name: 'details',
+      movieId: int.tryParse(id),
+    );
+  }
+  else {
+    switch (path) {
+      case '/' :
+        page = MainPage(
+          name: 'home',
+        );
+        break;
+      case '/login' :
+        page = LoginPage();
+        break;
+      case '/signup' :
+        page = SignupPage();
+        break;
+      case '/cart' :
+        page = MainPage(
+          name: 'cart',
+        );
+        break;
+    }
   }
 
   return MaterialPageRoute<void>(

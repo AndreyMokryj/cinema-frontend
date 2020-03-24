@@ -13,10 +13,15 @@ class MovieGrid extends StatelessWidget{
       child: Column(
         children: <Widget>[
           Expanded(child: Image.network(movie.imageLink,)),
+          SizedBox(
+            height: 5,
+          ),
           Text("${movie.name} /\n${movie.nameOriginal}"),
         ],
       ),
-      onPressed: (){},
+      onPressed: (){
+        Navigator.of(context).pushNamed('/details/${movie.id}');
+      },
     );
   }
 }

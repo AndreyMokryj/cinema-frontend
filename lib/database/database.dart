@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutterappweb/helpers/constants.dart';
+import 'package:flutterappweb/model/movie_model.dart';
 import 'package:flutterappweb/model/user_model.dart' as u;
 import 'package:http/http.dart' as http;
 
@@ -44,5 +45,17 @@ class DBProvider {
 
     final responseBody = jsonDecode(response.body);
     return responseBody;
+  }
+
+  Future<Movie> getMovie(int id) async {
+    final response = await http.get(
+      "${baseUrl}movies/$id",
+      headers: {
+        'content-type': 'application/json'
+      }
+    );
+
+    final responseBody = jsonDecode(response.body);
+    return Movie.fromMap(responseBody);
   }
 }
