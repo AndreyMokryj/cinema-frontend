@@ -19,6 +19,7 @@ class MainView extends StatelessWidget {
   Widget build(BuildContext context) {
     Movie movie;
     String title;
+    double w = MediaQuery.of(context).size.width;
 
     return WillPopScope(
       onWillPop: () {
@@ -43,10 +44,11 @@ class MainView extends StatelessWidget {
               ),
               body: Row(
                 children: <Widget>[
+                  w > 800 ?
                   Expanded(
                     flex: 1,
                     child: MenuWidget(),
-                  ),
+                  ) : Container(),
                   Expanded(
                     flex: 4,
                     child: Builder(

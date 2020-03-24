@@ -41,7 +41,7 @@ class _SessionsWidgetState extends State<SessionsWidget> {
                   children: sessionMaps.map((e) {
                     Session session = Session.fromMap(e);
                     return ListTile(
-                      title: Text(session.dateTime),
+                      title: Text(session.formatDate()),
                       onTap: () {
                         setState(() {
                           selectedSession = session;
