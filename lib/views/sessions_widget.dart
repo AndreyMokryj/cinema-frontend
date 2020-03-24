@@ -86,8 +86,10 @@ class _SessionsWidgetState extends State<SessionsWidget> {
                     crossAxisSpacing: 3,
                     mainAxisSpacing: 3,
                     children: places.map((e) => Container(
-//                      color: Colors.green,
-                      child: Text('${e.row} - ${e.column}'),
+                      child: FlatButton(
+                        padding: EdgeInsets.zero,
+                        child: Text('${e.row} - ${e.column}')
+                      ),
                     )).toList(),
                   ),
                 );

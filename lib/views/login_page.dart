@@ -104,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
     form.save();
     bool s = await DBProvider.db.checkUser(newUser);
     if (s) {
-      Provider.of<LoginModel>(context, listen: false).logIn();
+      Provider.of<LoginModel>(context, listen: false).logIn(newUser);
       Navigator.of(context).pushNamed('/');
     }
   }
