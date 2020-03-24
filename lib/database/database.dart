@@ -58,4 +58,16 @@ class DBProvider {
     final responseBody = jsonDecode(response.body);
     return Movie.fromMap(responseBody);
   }
+
+  Future<List> getSessions() async {
+    final response = await http.get(
+      "${baseUrl}sessions/",
+      headers: {
+        'content-type': 'application/json'
+      }
+    );
+
+    final responseBody = jsonDecode(response.body);
+    return responseBody;
+  }
 }

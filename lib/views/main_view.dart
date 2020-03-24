@@ -19,10 +19,6 @@ class MainView extends StatelessWidget {
   Widget build(BuildContext context) {
     Movie movie;
     String title;
-//    if(movieId != null){
-//      movie = DBProvider.db.getMovie(movieId) as Movie;
-//      title = '${movie.name} / ${movie.nameOriginal}';
-//    }
 
     return WillPopScope(
       onWillPop: () {
@@ -41,7 +37,7 @@ class MainView extends StatelessWidget {
           if (snapshot.hasData || movieId == null) {
             return Scaffold(
               appBar: AppBar(
-                automaticallyImplyLeading: false,
+                automaticallyImplyLeading: movieId != null,
                 title: Text(title ?? pageNames[name]),
                 centerTitle: true,
               ),
@@ -72,12 +68,6 @@ class MainView extends StatelessWidget {
                   ),
                 ],
               ),
-//        floatingActionButton: FloatingActionButton(
-//          onPressed: (){
-//            Provider.of<LoginModel>(context, listen: false).logOut();
-//            Navigator.of(context).pushNamed('/login');
-//          },
-//        ),
             );
           }
           else{
