@@ -59,9 +59,9 @@ class DBProvider {
     return Movie.fromMap(responseBody);
   }
 
-  Future<List> getSessions() async {
+  Future<List> getSessions(int movieId) async {
     final response = await http.get(
-      "${baseUrl}sessions/",
+      "${baseUrl}sessions/mid/$movieId",
       headers: {
         'content-type': 'application/json'
       }

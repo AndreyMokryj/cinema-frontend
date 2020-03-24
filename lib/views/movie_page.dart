@@ -1,19 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutterappweb/database/database.dart';
 import 'package:flutterappweb/model/movie_model.dart';
+import 'package:flutterappweb/views/sessions_widget.dart';
 
-class MoviePage extends StatefulWidget{
+class MoviePage extends StatelessWidget{
   final Movie movie;
 
   const MoviePage({Key key, this.movie}) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() {
-    return _MoviePageState();
-  }
-}
-
-class _MoviePageState extends State<MoviePage> {
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +26,7 @@ class _MoviePageState extends State<MoviePage> {
           Container(
             height: h * 0.8,
             child: Image.network(
-              widget.movie.imageLink,
+              movie.imageLink,
               fit: BoxFit.fitHeight,
             ),
           ),
@@ -42,7 +35,14 @@ class _MoviePageState extends State<MoviePage> {
           SizedBox(
             height: 20,
           ),
-          Text(widget.movie.description),
+          Text(movie.description),
+          SizedBox(
+            height: 20,
+          ),
+
+          SessionsWidget(
+            movie: movie,
+          ),
         ],
       ),
     );
