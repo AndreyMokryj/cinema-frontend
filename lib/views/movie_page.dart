@@ -37,7 +37,7 @@ class MoviePage extends StatelessWidget{
           ),
           Text(movie.description),
           SizedBox(
-            height: 20,
+            height: 30,
           ),
 
           SessionsWidget(

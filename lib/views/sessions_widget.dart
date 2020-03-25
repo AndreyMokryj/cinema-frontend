@@ -3,6 +3,7 @@ import 'package:flutterappweb/database/database.dart';
 import 'package:flutterappweb/model/movie_model.dart';
 import 'package:flutterappweb/model/place_model.dart';
 import 'package:flutterappweb/model/session_model.dart';
+import 'package:flutterappweb/views/place_widget.dart';
 
 class SessionsWidget extends StatefulWidget{
   final Movie movie;
@@ -53,7 +54,7 @@ class _SessionsWidgetState extends State<SessionsWidget> {
                               selectedSession = session;
                             });
                           },
-                          selected: selectedSession == session,
+                          selected: selectedSession?.id == session.id,
                         );
                       }).toList(),
                     ),
@@ -85,11 +86,8 @@ class _SessionsWidgetState extends State<SessionsWidget> {
                     crossAxisCount: 20,
                     crossAxisSpacing: 3,
                     mainAxisSpacing: 3,
-                    children: places.map((e) => Container(
-                      child: FlatButton(
-                        padding: EdgeInsets.zero,
-                        child: Text('${e.row} - ${e.column}')
-                      ),
+                    children: places.map((e) => PlaceWidget(
+                      place: e,
                     )).toList(),
                   ),
                 );
@@ -100,9 +98,8 @@ class _SessionsWidgetState extends State<SessionsWidget> {
             },
           )
           : Container(),
-
-
         ],
       );
   }
 }
+
