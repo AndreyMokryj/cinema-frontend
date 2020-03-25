@@ -120,16 +120,16 @@ class DBProvider {
     return responseBody;
   }
 
-  Future<bool> unbookPlaces(List<Place> places) async {
+  Future<void> unbookPlaces(List<int> placeIds) async {
     final response = await http.post(
       "${baseUrl}places/unbook/",
-      body: jsonEncode(places),
+      body: jsonEncode(placeIds),
       headers: {
         'content-type': 'application/json'
       }
     );
 
-    final responseBody = jsonDecode(response.body);
-    return responseBody;
+//    final responseBody = jsonDecode(response.body);
+//    return responseBody;
   }
 }

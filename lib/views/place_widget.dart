@@ -59,31 +59,42 @@ class _PlaceWidgetState extends State<PlaceWidget> {
         padding: EdgeInsets.zero,
         child: Text('${widget.place.row} - ${widget.place.column}'),
 
-        onPressed: placeStatus == PlaceStatus.FREE ? _selectPlace
-        : (placeStatus == PlaceStatus.SELECTED ? _unselectPlace : null),
+        onPressed: placeStatus == PlaceStatus.FREE ? (){
+          _selectPlace(context);
+        }
+        : (placeStatus == PlaceStatus.SELECTED ? (){
+          _unselectPlace(context);
+        } : null),
       ),
     );
   }
 
-  @override
-  void dispose() {
-    if(place.status == 1 && place.username == widget.user.username) {
-      _unselectPlace();
+//  @override
+//  void dispose() {
+//    if(place.status == 1 && place.username == widget.user.username) {
+//      _unselectPlace();
+//    }
+//    super.dispose();
+//  }
+
+  void _selectPlace(BuildContext context) async {
+    bool s = await DBProvider.db.selectPlace(place.id, widget.user);
+    if (s) {
+      Provider.of<LoginModel>(context, listen: false).placeIds.add(place.id);
+      place.status = 1;
+      place.username = user.username;
+
     }
-    super.dispose();
-  }
-
-  void _selectPlace() async{
-    place.status = 1;
-    place.username = user.username;
-    await DBProvider.db.selectPlace(place.id, widget.user);
-
+    else {
+      place.status = 2;
+    }
     setState(() {
       place = place;
     });
   }
 
-  void _unselectPlace()async{
+  void _unselectPlace(BuildContext context)async{
+    Provider.of<LoginModel>(context, listen: false).placeIds.remove(place.id);
     place.status = 0;
     place.username = null;
     await DBProvider.db.unselectPlace(place.id);

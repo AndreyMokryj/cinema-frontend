@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterappweb/database/database.dart';
+import 'package:flutterappweb/helpers/utils.dart';
 import 'package:flutterappweb/model/login_model.dart';
 import 'package:flutterappweb/model/movie_model.dart';
 import 'package:flutterappweb/model/place_model.dart';
@@ -52,6 +53,7 @@ class _SessionsWidgetState extends State<SessionsWidget> {
                         return ListTile(
                           title: Text(session.formatDate()),
                           onTap: () async {
+                            await clearSelPlaces(context);
                             setState(() {
                               selectedSession = session;
                             });
