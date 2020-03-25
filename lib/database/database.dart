@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutterappweb/helpers/constants.dart';
 import 'package:flutterappweb/model/movie_model.dart';
+import 'package:flutterappweb/model/order_model.dart';
+import 'package:flutterappweb/model/place_model.dart';
 import 'package:flutterappweb/model/user_model.dart' as u;
 import 'package:http/http.dart' as http;
 
@@ -74,6 +76,54 @@ class DBProvider {
   Future<List> getPlaces(int sessionId) async {
     final response = await http.get(
       "${baseUrl}places/sid/$sessionId",
+      headers: {
+        'content-type': 'application/json'
+      }
+    );
+
+    final responseBody = jsonDecode(response.body);
+    return responseBody;
+  }
+
+  Future<bool> selectPlace(int placeId, u.User user) async {
+    final response = await http.post(
+      "${baseUrl}places/select/$placeId",
+      body: jsonEncode(user.toMap()),
+      headers: {
+        'content-type': 'application/json'
+      }
+    );
+
+    final responseBody = jsonDecode(response.body);
+    return responseBody;
+  }
+
+  Future<void> unselectPlace(int placeId) async {
+    final response = await http.get(
+      "${baseUrl}places/unselect/$placeId",
+      headers: {
+        'content-type': 'application/json'
+      }
+    );
+  }
+
+  Future<bool> bookOrder(Order order) async {
+    final response = await http.post(
+      "${baseUrl}orders/book/",
+      body: jsonEncode(order.toMap()),
+      headers: {
+        'content-type': 'application/json'
+      }
+    );
+
+    final responseBody = jsonDecode(response.body);
+    return responseBody;
+  }
+
+  Future<bool> unbookPlaces(List<Place> places) async {
+    final response = await http.post(
+      "${baseUrl}places/unbook/",
+      body: jsonEncode(places),
       headers: {
         'content-type': 'application/json'
       }

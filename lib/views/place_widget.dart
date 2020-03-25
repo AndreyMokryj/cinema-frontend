@@ -66,6 +66,7 @@ class _PlaceWidgetState extends State<PlaceWidget> {
   void _selectPlace() async{
     place.status = 1;
     place.userName = userName;
+    await
 
     setState(() {
       place = place;
