@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutterappweb/database/database.dart';
+import 'package:flutterappweb/model/login_model.dart';
 import 'package:flutterappweb/model/movie_model.dart';
 import 'package:flutterappweb/model/place_model.dart';
 import 'package:flutterappweb/model/session_model.dart';
 import 'package:flutterappweb/views/place_widget.dart';
+import 'package:provider/provider.dart';
 
 class SessionsWidget extends StatefulWidget{
   final Movie movie;
@@ -49,7 +51,7 @@ class _SessionsWidgetState extends State<SessionsWidget> {
                         Session session = Session.fromMap(e);
                         return ListTile(
                           title: Text(session.formatDate()),
-                          onTap: () {
+                          onTap: () async {
                             setState(() {
                               selectedSession = session;
                             });
@@ -59,7 +61,34 @@ class _SessionsWidgetState extends State<SessionsWidget> {
                       }).toList(),
                     ),
 
+                    selectedSession != null ?
+                    FutureBuilder(
+                      future: DBProvider.db.getPlaces(selectedSession.id),
+                      builder: (context, snapshot){
+                        if (snapshot.hasData){
+                          var places = Place.getSortedFromMaps(snapshot.data);
 
+                          return Container(
+                            child: GridView.count(
+                              physics: null,
+                              primary: false,
+                              shrinkWrap: true,
+                              crossAxisCount: 20,
+                              crossAxisSpacing: 3,
+                              mainAxisSpacing: 3,
+                              children: places.map((e) => PlaceWidget(
+                                place: e,
+                                userName: Provider.of<LoginModel>(context).user.username,
+                              )).toList(),
+                            ),
+                          );
+                        }
+                        else {
+                          return Container();
+                        }
+                      },
+                    )
+                      : Container(),
                   ],
                 );
               }
@@ -71,33 +100,34 @@ class _SessionsWidgetState extends State<SessionsWidget> {
             },
           ),
 
-          selectedSession != null ?
-          FutureBuilder(
-            future: DBProvider.db.getPlaces(selectedSession.id),
-            builder: (context, snapshot){
-              if (snapshot.hasData){
-                final places = Place.getSortedFromMaps(snapshot.data);
-
-                return Container(
-                  child: GridView.count(
-                    physics: null,
-                    primary: false,
-                    shrinkWrap: true,
-                    crossAxisCount: 20,
-                    crossAxisSpacing: 3,
-                    mainAxisSpacing: 3,
-                    children: places.map((e) => PlaceWidget(
-                      place: e,
-                    )).toList(),
-                  ),
-                );
-              }
-              else {
-                return Container();
-              }
-            },
-          )
-          : Container(),
+//          selectedSession != null ?
+//          FutureBuilder(
+//            future: DBProvider.db.getPlaces(selectedSession.id),
+//            builder: (context, snapshot){
+//              if (snapshot.hasData){
+//                var places = Place.getSortedFromMaps(snapshot.data);
+//
+//                return Container(
+//                  child: GridView.count(
+//                    physics: null,
+//                    primary: false,
+//                    shrinkWrap: true,
+//                    crossAxisCount: 20,
+//                    crossAxisSpacing: 3,
+//                    mainAxisSpacing: 3,
+//                    children: places.map((e) => PlaceWidget(
+//                      place: e,
+//                      userName: Provider.of<LoginModel>(context).user.username,
+//                    )).toList(),
+//                  ),
+//                );
+//              }
+//              else {
+//                return Container();
+//              }
+//            },
+//          )
+//          : Container(),
         ],
       );
   }

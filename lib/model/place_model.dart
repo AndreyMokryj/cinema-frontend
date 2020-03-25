@@ -4,7 +4,7 @@ class Place{
   int row;
   int column;
   int status;
-
+  String userName;
 
   Place({
     this.id,
@@ -12,6 +12,7 @@ class Place{
     this.row,
     this.column,
     this.status,
+    this.userName
   });
 
   factory Place.fromMap(Map<String, dynamic> map) => Place(
@@ -20,6 +21,7 @@ class Place{
     row: map['row'] as int,
     column: map['column'] as int,
     status: map['status'] as int,
+    userName: map['userName'] as String,
   );
 
   static List<Place> getSortedFromMaps(List maps){
