@@ -88,7 +88,7 @@ class _SessionsWidgetState extends State<SessionsWidget> {
                     mainAxisSpacing: 3,
                     children: places.map((e) => PlaceWidget(
                       place: e,
-                      userName: Provider.of<LoginModel>(context).user.username,
+                      user: Provider.of<LoginModel>(context).user,
                     )).toList(),
                   ),
                 );

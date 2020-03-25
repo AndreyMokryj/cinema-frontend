@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutterappweb/database/database.dart';
 import 'package:flutterappweb/model/login_model.dart';
 import 'package:flutterappweb/model/place_model.dart';
+import 'package:flutterappweb/model/user_model.dart';
 import 'package:provider/provider.dart';
 
 class PlaceWidget extends StatefulWidget{
   final Place place;
-  final String userName;
+  final User user;
 
-  const PlaceWidget({Key key, this.place, this.userName}) : super(key: key);
+  const PlaceWidget({Key key, this.place, this.user}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -17,12 +19,12 @@ class PlaceWidget extends StatefulWidget{
 
 class _PlaceWidgetState extends State<PlaceWidget> {
   Place place;
-  String userName;
+  User user;
 
   @override
   void initState() {
     place = widget.place;
-    userName = widget.userName;
+    user = widget.user;
     super.initState();
   }
 
@@ -33,15 +35,15 @@ class _PlaceWidgetState extends State<PlaceWidget> {
     if (place.status == 0){
       placeStatus = PlaceStatus.FREE;
     }
-    if (place.status > 0 && place.userName != userName){
+    if (place.status > 0 && place.username != user.username){
       placeColor = Colors.red;
       placeStatus = PlaceStatus.NA;
     }
-    if (place.status == 1 && place.userName == userName){
+    if (place.status == 1 && place.username == user.username){
       placeColor = Colors.yellow;
       placeStatus = PlaceStatus.SELECTED;
     }
-    if (place.status == 2 && place.userName == userName){
+    if (place.status == 2 && place.username == user.username){
       placeColor = Colors.green;
       placeStatus = PlaceStatus.BOOKED;
     }
@@ -63,10 +65,18 @@ class _PlaceWidgetState extends State<PlaceWidget> {
     );
   }
 
+  @override
+  void dispose() {
+    if(place.status == 1 && place.username == widget.user.username) {
+      _unselectPlace();
+    }
+    super.dispose();
+  }
+
   void _selectPlace() async{
     place.status = 1;
-    place.userName = userName;
-    await
+    place.username = user.username;
+    await DBProvider.db.selectPlace(place.id, widget.user);
 
     setState(() {
       place = place;
@@ -75,7 +85,8 @@ class _PlaceWidgetState extends State<PlaceWidget> {
 
   void _unselectPlace()async{
     place.status = 0;
-    place.userName = null;
+    place.username = null;
+    await DBProvider.db.unselectPlace(place.id);
 
     setState(() {
       place = place;
