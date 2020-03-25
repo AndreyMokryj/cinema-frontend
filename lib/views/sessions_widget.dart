@@ -60,35 +60,6 @@ class _SessionsWidgetState extends State<SessionsWidget> {
                         );
                       }).toList(),
                     ),
-
-                    selectedSession != null ?
-                    FutureBuilder(
-                      future: DBProvider.db.getPlaces(selectedSession.id),
-                      builder: (context, snapshot){
-                        if (snapshot.hasData){
-                          var places = Place.getSortedFromMaps(snapshot.data);
-
-                          return Container(
-                            child: GridView.count(
-                              physics: null,
-                              primary: false,
-                              shrinkWrap: true,
-                              crossAxisCount: 20,
-                              crossAxisSpacing: 3,
-                              mainAxisSpacing: 3,
-                              children: places.map((e) => PlaceWidget(
-                                place: e,
-                                userName: Provider.of<LoginModel>(context).user.username,
-                              )).toList(),
-                            ),
-                          );
-                        }
-                        else {
-                          return Container();
-                        }
-                      },
-                    )
-                      : Container(),
                   ],
                 );
               }
@@ -100,34 +71,36 @@ class _SessionsWidgetState extends State<SessionsWidget> {
             },
           ),
 
-//          selectedSession != null ?
-//          FutureBuilder(
-//            future: DBProvider.db.getPlaces(selectedSession.id),
-//            builder: (context, snapshot){
-//              if (snapshot.hasData){
-//                var places = Place.getSortedFromMaps(snapshot.data);
-//
-//                return Container(
-//                  child: GridView.count(
-//                    physics: null,
-//                    primary: false,
-//                    shrinkWrap: true,
-//                    crossAxisCount: 20,
-//                    crossAxisSpacing: 3,
-//                    mainAxisSpacing: 3,
-//                    children: places.map((e) => PlaceWidget(
-//                      place: e,
-//                      userName: Provider.of<LoginModel>(context).user.username,
-//                    )).toList(),
-//                  ),
-//                );
-//              }
-//              else {
-//                return Container();
-//              }
-//            },
-//          )
-//          : Container(),
+          selectedSession != null ?
+          FutureBuilder(
+            future: DBProvider.db.getPlaces(selectedSession.id),
+            builder: (context, snapshot){
+              if (snapshot.hasData && snapshot.connectionState == ConnectionState.done){
+                var places = Place.getSortedFromMaps(snapshot.data);
+
+                return Container(
+                  child: GridView.count(
+                    physics: null,
+                    primary: false,
+                    shrinkWrap: true,
+                    crossAxisCount: 20,
+                    crossAxisSpacing: 3,
+                    mainAxisSpacing: 3,
+                    children: places.map((e) => PlaceWidget(
+                      place: e,
+                      userName: Provider.of<LoginModel>(context).user.username,
+                    )).toList(),
+                  ),
+                );
+              }
+              else {
+                return Container(
+                  height: 350,
+                );
+              }
+            },
+          )
+          : Container(),
         ],
       );
   }
