@@ -80,7 +80,7 @@ class _PlaceWidgetState extends State<PlaceWidget> {
   void _selectPlace(BuildContext context) async {
     bool s = await DBProvider.db.selectPlace(place.id, widget.user);
     if (s) {
-      Provider.of<LoginModel>(context, listen: false).placeIds.add(place.id);
+      Provider.of<LoginModel>(context, listen: false).addPlaceId(place.id);
       place.status = 1;
       place.username = user.username;
 
@@ -94,7 +94,7 @@ class _PlaceWidgetState extends State<PlaceWidget> {
   }
 
   void _unselectPlace(BuildContext context)async{
-    Provider.of<LoginModel>(context, listen: false).placeIds.remove(place.id);
+    Provider.of<LoginModel>(context, listen: false).removePlaceId(place.id);
     place.status = 0;
     place.username = null;
     await DBProvider.db.unselectPlace(place.id);

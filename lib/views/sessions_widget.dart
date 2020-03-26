@@ -3,6 +3,7 @@ import 'package:flutterappweb/database/database.dart';
 import 'package:flutterappweb/helpers/utils.dart';
 import 'package:flutterappweb/model/login_model.dart';
 import 'package:flutterappweb/model/movie_model.dart';
+import 'package:flutterappweb/model/order_model.dart';
 import 'package:flutterappweb/model/place_model.dart';
 import 'package:flutterappweb/model/session_model.dart';
 import 'package:flutterappweb/views/place_widget.dart';
@@ -103,6 +104,35 @@ class _SessionsWidgetState extends State<SessionsWidget> {
             },
           )
           : Container(),
+
+          Consumer<LoginModel>(
+            builder: (context, loginModel, __){
+              if(loginModel.placeIds.length > 0){
+                return Container(
+                  child: FlatButton(
+                    padding: EdgeInsets.zero,
+                    child: Text("Купить!"),
+                    onPressed: ()async{
+                      bool s = await DBProvider.db.bookOrder(Order(
+                        username: loginModel.user.username,
+                        placeIds: loginModel.placeIds,
+                      ));
+                      if (s){
+                        loginModel.clearPlaceIds();
+                        Navigator.of(context).pushNamed('/cart');
+                      }
+                      else {
+                        Navigator.of(context).pushReplacementNamed('/details/${widget.movie.id}');
+                      }
+                    },
+                  ),
+                );
+              }
+              else{
+                return Container();
+              }
+            },
+          ),
         ],
       );
   }

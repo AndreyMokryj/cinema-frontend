@@ -8,5 +8,5 @@ void clearSelPlaces(BuildContext context) async{
   if(placeIds?.length > 0 ?? false) {
     await DBProvider.db.unbookPlaces(placeIds);
   }
-  Provider.of<LoginModel>(context, listen: false).placeIds = [];
+  Provider.of<LoginModel>(context, listen: false).clearPlaceIds();
 }
