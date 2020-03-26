@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutterappweb/database/database.dart';
-import 'package:flutterappweb/model/login_model.dart';
 import 'package:flutterappweb/model/place_model.dart';
 import 'package:flutterappweb/model/user_model.dart';
-import 'package:flutterappweb/model/user_places_model.dart';
+import 'package:flutterappweb/model/notifiers/user_places_notifier.dart';
 import 'package:provider/provider.dart';
 
 class PlaceWidget extends StatefulWidget{
@@ -69,14 +68,6 @@ class _PlaceWidgetState extends State<PlaceWidget> {
       ),
     );
   }
-
-//  @override
-//  void dispose() {
-//    if(place.status == 1 && place.username == widget.user.username) {
-//      _unselectPlace();
-//    }
-//    super.dispose();
-//  }
 
   void _selectPlace(BuildContext context) async {
     bool s = await DBProvider.db.selectPlace(place.id, widget.user);

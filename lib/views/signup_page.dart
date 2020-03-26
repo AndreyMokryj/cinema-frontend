@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutterappweb/database/database.dart';
 import 'package:flutterappweb/helpers/styles.dart';
-import 'package:flutterappweb/model/login_model.dart';
+import 'package:flutterappweb/model/notifiers/login_notifier.dart';
 import 'package:flutterappweb/model/user_model.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +19,7 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      Provider.of<LoginModel>(context, listen: false).logOut();
+      Provider.of<LoginNotifier>(context, listen: false).logOut();
     });
 
     return Scaffold(
@@ -74,10 +74,6 @@ class _SignupPageState extends State<SignupPage> {
                       'Зарегистрироваться'
                     ),
                     onPressed: () {
-//                      var success = DBProvider.db.newUser(User(username: "admin", password:"admin"));
-//                      if(success) {
-//                        Navigator.of(context).pushNamed('/login');
-//                      }
                       _submit();
                     }
                   ),

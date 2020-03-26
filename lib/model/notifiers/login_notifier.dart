@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterappweb/model/user_model.dart';
 
-class LoginModel extends ChangeNotifier {
+class LoginNotifier extends ChangeNotifier {
   bool loggedIn;
   User _user;
   get user => _user;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutterappweb/database/database.dart';
 import 'package:flutterappweb/helpers/styles.dart';
-import 'package:flutterappweb/model/login_model.dart';
+import 'package:flutterappweb/model/notifiers/login_notifier.dart';
 import 'package:flutterappweb/model/user_model.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      Provider.of<LoginModel>(context, listen: false).logOut();
+      Provider.of<LoginNotifier>(context, listen: false).logOut();
     });
 
     return WillPopScope(
@@ -104,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
     form.save();
     bool s = await DBProvider.db.checkUser(newUser);
     if (s) {
-      Provider.of<LoginModel>(context, listen: false).logIn(newUser);
+      Provider.of<LoginNotifier>(context, listen: false).logIn(newUser);
       Navigator.of(context).pushNamed('/');
     }
   }

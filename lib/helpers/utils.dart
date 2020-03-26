@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterappweb/database/database.dart';
-import 'package:flutterappweb/model/user_places_model.dart';
+import 'package:flutterappweb/model/notifiers/user_places_notifier.dart';
 import 'package:provider/provider.dart';
 
 void clearSelPlaces(BuildContext context) async{

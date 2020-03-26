@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutterappweb/model/login_model.dart';
+import 'package:flutterappweb/model/notifiers/login_notifier.dart';
 import 'package:flutterappweb/views/login_page.dart';
 import 'package:flutterappweb/views/main_view.dart';
 import 'package:flutterappweb/views/signup_page.dart';
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => LoginModel(),
+      create: (context) => LoginNotifier(),
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
@@ -37,7 +37,7 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool loggedIn = Provider.of<LoginModel>(context, listen: false).loggedIn ?? false;
+    bool loggedIn = Provider.of<LoginNotifier>(context, listen: false).loggedIn ?? false;
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
       if (!loggedIn) {

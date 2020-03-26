@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutterappweb/helpers/constants.dart';
 import 'package:flutterappweb/model/movie_model.dart';
 import 'package:flutterappweb/model/order_model.dart';
-import 'package:flutterappweb/model/place_model.dart';
 import 'package:flutterappweb/model/user_model.dart' as u;
 import 'package:http/http.dart' as http;
 

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutterappweb/database/database.dart';
 import 'package:flutterappweb/helpers/utils.dart';
-import 'package:flutterappweb/model/login_model.dart';
+import 'package:flutterappweb/model/notifiers/login_notifier.dart';
 import 'package:flutterappweb/model/movie_model.dart';
 import 'package:flutterappweb/model/order_model.dart';
 import 'package:flutterappweb/model/place_model.dart';
 import 'package:flutterappweb/model/session_model.dart';
 import 'package:flutterappweb/model/user_model.dart';
-import 'package:flutterappweb/model/user_places_model.dart';
+import 'package:flutterappweb/model/notifiers/user_places_notifier.dart';
 import 'package:flutterappweb/views/place_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -35,7 +35,7 @@ class _SessionsWidgetState extends State<SessionsWidget> {
       .of(context)
       .size
       .height;
-    User user = Provider.of<LoginModel>(context).user;
+    User user = Provider.of<LoginNotifier>(context).user;
 
     return ChangeNotifierProvider(
       create: (context) => UserPlacesNotifier()..init(user),
@@ -96,7 +96,7 @@ class _SessionsWidgetState extends State<SessionsWidget> {
                       mainAxisSpacing: 3,
                       children: places.map((e) => PlaceWidget(
                         place: e,
-                        user: Provider.of<LoginModel>(context).user,
+                        user: Provider.of<LoginNotifier>(context).user,
                       )).toList(),
                     ),
                   );
