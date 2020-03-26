@@ -3,7 +3,7 @@ import 'package:flutterappweb/database/database.dart';
 import 'package:flutterappweb/model/movie_model.dart';
 import 'package:flutterappweb/views/movie_grid.dart';
 
-class TicketsList extends StatelessWidget{
+class MovieList extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
