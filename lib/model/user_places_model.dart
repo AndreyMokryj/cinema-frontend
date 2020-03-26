@@ -13,21 +13,17 @@ class UserPlacesNotifier extends ChangeNotifier {
     _user = user;
     final placeMaps = await DBProvider.db.getPlacesForUser(user);
     final places = Place.getSortedFromMaps(placeMaps);
+    _placeIds = [];
     for(Place p in places){
       _placeIds.add(p.id);
     }
-
+    notifyListeners();
   }
 
   void addPlaceId(int placeId){
     _placeIds.add(placeId);
     notifyListeners();
   }
-
-//  void addPlaceIds(List<Place> places){
-//    _placeIds.addAll(placeIds);
-//    notifyListeners();
-//  }
 
   void removePlaceId(int placeId){
     _placeIds.remove(placeId);

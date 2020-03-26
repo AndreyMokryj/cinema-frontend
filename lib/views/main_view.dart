@@ -20,11 +20,8 @@ class MainView extends StatelessWidget {
     String title;
     double w = MediaQuery.of(context).size.width;
 
-    clearSelPlaces(context);
-
     return WillPopScope(
       onWillPop: () {
-        clearSelPlaces(context);
         if (name != 'home') {
           Navigator.of(context).pop();
         }
