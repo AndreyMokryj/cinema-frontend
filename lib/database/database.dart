@@ -85,6 +85,19 @@ class DBProvider {
     return responseBody;
   }
 
+  Future<List> getPlacesForUser(u.User user) async {
+    final response = await http.post(
+      "${baseUrl}places/user/",
+      body: jsonEncode(user.toMap()),
+      headers: {
+        'content-type': 'application/json'
+      }
+    );
+
+    final responseBody = jsonDecode(response.body);
+    return responseBody;
+  }
+
   Future<bool> selectPlace(int placeId, u.User user) async {
     final response = await http.post(
       "${baseUrl}places/select/$placeId",
