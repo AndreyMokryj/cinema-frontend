@@ -4,6 +4,7 @@ class Session{
   int id;
   int movieId;
   String dateTime;
+  int price;
   int isFull;
 
 
@@ -11,6 +12,7 @@ class Session{
     this.id,
     this.movieId,
     this.dateTime,
+    this.price,
     this.isFull,
   });
 
@@ -24,13 +26,14 @@ class Session{
     final month = monthNames[dates[1]];
     final day = dates[2];
 
-    return '$day $month $year -- $time';
+    return '$day $month $year -- $time -- $price грн.';
   }
 
   factory Session.fromMap(Map<String, dynamic> map) => Session(
     id: map['id'] as int,
     movieId: map['movieId'] as int,
     dateTime: map['dateTime'] as String,
+    price: map['price'] as int,
     isFull: map['isFull'] as int,
   );
 }

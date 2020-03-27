@@ -112,29 +112,45 @@ class _SessionsWidgetState extends State<SessionsWidget> {
 
             Consumer<UserPlacesNotifier>(
               builder: (context, userPlacesNotifier, __){
-                if(selectedSession != null && (userPlacesNotifier.placeIds?.length ?? 0) > 0){
-                  return Container(
-                    child: FlatButton(
-                      padding: EdgeInsets.zero,
-                      child: Text("Купить!"),
-                      onPressed: ()async{
-                        bool s = await DBProvider.db.bookOrder(Order(
-                          username: userPlacesNotifier.user.username,
-                          placeIds: userPlacesNotifier.placeIds,
-                        ));
-                        if (s){
-                          userPlacesNotifier.clearPlaceIds();
-                          Navigator.of(context).pushNamed('/cart');
-                        }
-                        else {
-                          Navigator.of(context).pushReplacementNamed('/details/${widget.movie.id}');
-                        }
-                      },
-                    ),
+                if(selectedSession != null) {
+                  int sum = selectedSession.price *
+                    userPlacesNotifier.placeIds.length;
+                  return Column(
+                    children: <Widget>[
+                      Text('Сумма $sum грн.'),
+
+                      (userPlacesNotifier.placeIds.length ?? 0) > 0 ?
+                      Container(
+                        child: FlatButton(
+                          padding: EdgeInsets.zero,
+                          child: Text("Купить!"),
+                          onPressed: () async {
+                            bool s = await DBProvider.db.bookOrder(Order(
+                              username: userPlacesNotifier.user.username,
+                              placeIds: userPlacesNotifier.placeIds,
+                              sum: sum,
+                            ));
+                            if (s) {
+                              userPlacesNotifier.clearPlaceIds();
+                              Navigator.of(context).pushNamed('/cart');
+                            }
+                            else {
+                              Navigator.of(context).pushReplacementNamed(
+                                '/details/${widget.movie.id}');
+                            }
+                          },
+                        ),
+                      )
+                        : Container(
+                        height: 200,
+                      ),
+                    ],
                   );
                 }
                 else{
-                  return Container();
+                  return Container(
+                    height: 200,
+                  );
                 }
               },
             ),
@@ -143,4 +159,3 @@ class _SessionsWidgetState extends State<SessionsWidget> {
     );
   }
 }
-
