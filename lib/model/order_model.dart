@@ -1,9 +1,10 @@
 class Order{
+  int id;
   String username;
   List<int> placeIds;
   int sum;
 
-  Order({this.username, this.placeIds, this.sum});
+  Order({this.id, this.username, this.placeIds, this.sum});
 
   factory Order.fromMap(Map<String, dynamic> map) {
     final placeIdsStr = (map['placeIds'] as String).split(' ');
@@ -15,6 +16,7 @@ class Order{
     };
 
     return Order(
+      id: map['id'] as int,
       username: map['username'] as String,
       placeIds: placeIds,
       sum: map['sum'] as int,
@@ -23,6 +25,7 @@ class Order{
 
   Map<String, dynamic> toMap(){
     return {
+      'id' : id,
       'username' : username,
       'placeIds' : placeIds,
       'sum' : sum,

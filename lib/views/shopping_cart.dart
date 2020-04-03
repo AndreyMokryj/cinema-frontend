@@ -16,7 +16,7 @@ class ShoppingCart extends StatelessWidget{
 
       builder: (context, snapshot){
         if (snapshot.hasData){
-          final orderMaps = snapshot.data as List;
+          final orderMaps = (snapshot.data as List)..sort((a,b) => b['id'] - a['id']);
 
           if (orderMaps.length > 0) {
             return SingleChildScrollView(

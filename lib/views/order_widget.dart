@@ -14,19 +14,34 @@ class OrderWidget extends StatefulWidget{
 }
 
 class _OrderWidgetState extends State<OrderWidget> {
+  Order order;
 
+  @override
+  void initState() {
+    order = widget.order;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
       children: <Widget>[
-        Text('Заказ ${widget.order.placeIds
-          .length} билета(ов) на сумму ${widget.order.sum} грн.'),
-        Row(
+        Expanded(
+          child: Text('Заказ #${order.id} - ${order.placeIds
+            .length} билета(ов) на сумму ${order.sum} грн.'),
+        ),
+        Column(
           children: <Widget>[
             FlatButton(
               padding: EdgeInsets.zero,
+              child: Text('Оплатить'),
+              onPressed: _payOrder,
+            ),
+
+            FlatButton(
+              padding: EdgeInsets.zero,
               child: Text('Отменить'),
+              onPressed: _cancelOrder,
             ),
           ],
         ),
@@ -34,4 +49,14 @@ class _OrderWidgetState extends State<OrderWidget> {
     );
   }
 
+
+  void _payOrder() {
+
+  }
+
+  void _cancelOrder() {
+
+  }
 }
+
+enum OrderStatus{PAID, UNPAID, CANCELLED}
