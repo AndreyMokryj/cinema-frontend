@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterappweb/database/database.dart';
 import 'package:flutterappweb/model/order_model.dart';
 
 class OrderWidget extends StatefulWidget{
@@ -30,6 +31,8 @@ class _OrderWidgetState extends State<OrderWidget> {
           child: Text('Заказ #${order.id} - ${order.placeIds
             .length} билета(ов) на сумму ${order.sum} грн.'),
         ),
+
+        order.status == 0 ?
         Column(
           children: <Widget>[
             FlatButton(
@@ -44,18 +47,36 @@ class _OrderWidgetState extends State<OrderWidget> {
               onPressed: _cancelOrder,
             ),
           ],
+        )
+        : Text(
+          order.status == 1 ? "Оплачен" : "Отменен",
+          style: TextStyle(
+            color: order.status == 1 ? Colors.green : Colors.red,
+          ),
         ),
       ],
     );
   }
 
 
-  void _payOrder() {
-
+  void _payOrder() async{
+    bool s = await DBProvider.db.payOrder(order);
+    if (s){
+      order.status = 1;
+    }
+    setState(() {
+      order = order;
+    });
   }
 
-  void _cancelOrder() {
-
+  void _cancelOrder() async {
+    bool s = await DBProvider.db.cancelOrder(order);
+    if (s){
+      order.status = -1;
+    }
+    setState(() {
+      order = order;
+    });
   }
 }
 
