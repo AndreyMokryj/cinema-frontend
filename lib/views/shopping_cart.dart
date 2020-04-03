@@ -3,6 +3,7 @@ import 'package:flutterappweb/database/database.dart';
 import 'package:flutterappweb/model/notifiers/login_notifier.dart';
 import 'package:flutterappweb/model/order_model.dart';
 import 'package:flutterappweb/model/user_model.dart';
+import 'package:flutterappweb/views/order_widget.dart';
 import 'package:provider/provider.dart';
 
 class ShoppingCart extends StatelessWidget{
@@ -16,25 +17,28 @@ class ShoppingCart extends StatelessWidget{
       builder: (context, snapshot){
         if (snapshot.hasData){
           final orderMaps = snapshot.data as List;
-          return Column(
-            children: orderMaps.map((map) {
-              Order order = Order.fromMap(map);
 
-              return Column(
-                children: <Widget>[
-                  Text('Заказ ${order.placeIds.length} билета(ов) на сумму ${order.sum} грн.'),
-                  Row(
-                    children: <Widget>[
-                      FlatButton(
-                        padding: EdgeInsets.zero,
-                        child: Text('Отменить'),
-                      )
-                    ],
-                  ),
-                ],
-              );
-            }).toList(),
-          );
+          if (orderMaps.length > 0) {
+            return SingleChildScrollView(
+              child: Column(
+                children: orderMaps.map((map) {
+                  Order order = Order.fromMap(map);
+
+                  return OrderWidget(
+                    order: order,
+                  );
+                }).toList(),
+              ),
+            );
+          }
+          else {
+            return Center(
+              child: Text("Заказов пока нет"),
+            );
+          }
+        }
+        else{
+          return Container();
         }
       },
     );
