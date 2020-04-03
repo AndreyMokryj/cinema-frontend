@@ -1,10 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutterappweb/database/database.dart';
+import 'package:flutterappweb/model/notifiers/login_notifier.dart';
+import 'package:flutterappweb/model/order_model.dart';
+import 'package:flutterappweb/model/user_model.dart';
+import 'package:provider/provider.dart';
 
 class ShoppingCart extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text("Shopping Cart"),
+    User user = Provider.of<LoginNotifier>(context, listen: false).user;
+
+    return FutureBuilder(
+      future: DBProvider.db.getOrders(user),
+
+      builder: (context, snapshot){
+        if (snapshot.hasData){
+          final orderMaps = snapshot.data as List;
+          return Column(
+            children: orderMaps.map((map) {
+              Order order = Order.fromMap(map);
+
+              return Column(
+                children: <Widget>[
+                  Text('Заказ ${order.placeIds.length} билета(ов) на сумму ${order.sum} грн.'),
+                  Row(
+                    children: <Widget>[
+                      FlatButton(
+                        padding: EdgeInsets.zero,
+                        child: Text('Отменить'),
+                      )
+                    ],
+                  ),
+                ],
+              );
+            }).toList(),
+          );
+        }
+      },
     );
   }
 }

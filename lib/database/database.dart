@@ -141,4 +141,43 @@ class DBProvider {
       }
     );
   }
+
+  Future<List> getOrders(u.User user) async {
+    final response = await http.post(
+      "${baseUrl}orders/user/",
+      body: jsonEncode(user.toMap()),
+      headers: {
+        'content-type': 'application/json'
+      }
+    );
+
+    final responseBody = jsonDecode(response.body);
+    return responseBody;
+  }
+
+  Future<bool> payOrder(Order order) async {
+    final response = await http.post(
+      "${baseUrl}orders/pay/",
+      body: jsonEncode(order.toMap()),
+      headers: {
+        'content-type': 'application/json'
+      }
+    );
+
+    final responseBody = jsonDecode(response.body);
+    return responseBody;
+  }
+
+  Future<bool> cancelOrder(Order order) async {
+    final response = await http.post(
+      "${baseUrl}orders/cancel/",
+      body: jsonEncode(order.toMap()),
+      headers: {
+        'content-type': 'application/json'
+      }
+    );
+
+    final responseBody = jsonDecode(response.body);
+    return responseBody;
+  }
 }
