@@ -36,33 +36,12 @@ class MainView extends StatelessWidget {
           if (snapshot.hasData || movieId == null) {
             return Scaffold(
               appBar: AppBar(
-//                leading: Builder(
-//                  builder: (context) => Row(
-//                    children: <Widget>[
-//                      w <= 800 ?
-//                      IconButton(
-//                        icon: Icon(Icons.menu),
-//                        onPressed: (){
-//                          Scaffold.of(context).openDrawer();
-//                        },
-//                      ) : Container(),
-//
-//                      movieId != null ?
-//                      IconButton(
-//                        icon: Icon(Icons.arrow_back),
-//                        onPressed: (){
-//                          Navigator.of(context).pop();
-//                        },
-//                      ) : Container(),
-//                    ],
-//                  ),
-//                ),
                 automaticallyImplyLeading: movieId != null,
 //                automaticallyImplyLeading: false,
                 title: Text(title ?? pageNames[name]),
                 centerTitle: true,
                 actions: <Widget>[
-                  w <= 800 ?
+                  w <= 1200 ?
                   Builder(
                     builder: (context) => IconButton(
                       icon: Icon(Icons.menu),
@@ -71,19 +50,11 @@ class MainView extends StatelessWidget {
                       },
                     ),
                   ) : Container(),
-
-//                  movieId != null ?
-//                  IconButton(
-//                    icon: Icon(Icons.arrow_back),
-//                    onPressed: (){
-//                      Navigator.of(context).pop();
-//                    },
-//                  ) : Container(),
                 ],
               ),
               body: Row(
                 children: <Widget>[
-                  w > 800 ?
+                  w > 1200 ?
                   Expanded(
                     flex: 1,
                     child: MenuWidget(),
@@ -110,7 +81,7 @@ class MainView extends StatelessWidget {
                 ],
               ),
 
-              endDrawer: w <= 800 ? Drawer(
+              endDrawer: w <= 1200 ? Drawer(
                 child: MenuWidget(),
               ) : null,
             );
