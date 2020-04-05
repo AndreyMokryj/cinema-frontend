@@ -24,8 +24,9 @@ class MovieList extends StatelessWidget{
             padding: EdgeInsets.all(5),
             child: GridView.count(
               crossAxisSpacing: 5,
-              mainAxisSpacing: 20,
+              mainAxisSpacing: 25,
               crossAxisCount: count,
+              childAspectRatio: 0.8,
               children: movieMaps.map((e) => MovieGrid(
                 movie: Movie.fromMap(e),
               )).toList(),
