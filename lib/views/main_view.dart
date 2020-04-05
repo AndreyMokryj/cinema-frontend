@@ -41,7 +41,7 @@ class MainView extends StatelessWidget {
                 title: Text(title ?? pageNames[name]),
                 centerTitle: true,
                 actions: <Widget>[
-                  w <= 1200 ?
+                  w <= largeLimit ?
                   Builder(
                     builder: (context) => IconButton(
                       icon: Icon(Icons.menu),
@@ -54,7 +54,7 @@ class MainView extends StatelessWidget {
               ),
               body: Row(
                 children: <Widget>[
-                  w > 1200 ?
+                  w > largeLimit ?
                   Expanded(
                     flex: 1,
                     child: MenuWidget(),
@@ -84,7 +84,7 @@ class MainView extends StatelessWidget {
                 ],
               ),
 
-              endDrawer: w <= 1200 ? Drawer(
+              endDrawer: w <= largeLimit ? Drawer(
                 child: MenuWidget(),
               ) : null,
             );

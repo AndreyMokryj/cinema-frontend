@@ -19,3 +19,7 @@ const monthNames = {
   '11' : 'Ноября',
   '12' : 'Декабря',
 };
+
+const smallLimit = 600;
+const mediumLimit = 900;
+const largeLimit = 1200;
