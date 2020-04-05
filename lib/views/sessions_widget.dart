@@ -27,14 +27,8 @@ class _SessionsWidgetState extends State<SessionsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    double w = MediaQuery
-      .of(context)
-      .size
-      .width;
-    double h = MediaQuery
-      .of(context)
-      .size
-      .height;
+    double w = getWidth(context);
+    double h = getHeight(context);
     User user = Provider.of<LoginNotifier>(context).user;
 
     return ChangeNotifierProvider(

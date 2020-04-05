@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterappweb/database/database.dart';
 import 'package:flutterappweb/helpers/constants.dart';
+import 'package:flutterappweb/helpers/utils.dart';
 import 'package:flutterappweb/model/movie_model.dart';
 import 'package:flutterappweb/views/menu_widget.dart';
 import 'package:flutterappweb/views/movie_page.dart';
@@ -17,7 +18,7 @@ class MainView extends StatelessWidget {
   Widget build(BuildContext context) {
     Movie movie;
     String title;
-    double w = MediaQuery.of(context).size.width;
+    double w = getWidth(context);
 
     return WillPopScope(
       onWillPop: () {

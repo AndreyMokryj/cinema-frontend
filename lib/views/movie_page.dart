@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterappweb/database/database.dart';
+import 'package:flutterappweb/helpers/utils.dart';
 import 'package:flutterappweb/model/movie_model.dart';
 import 'package:flutterappweb/views/sessions_widget.dart';
 
@@ -10,14 +10,8 @@ class MoviePage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    double w = MediaQuery
-      .of(context)
-      .size
-      .width;
-    double h = MediaQuery
-      .of(context)
-      .size
-      .height;
+    double w = getWidth(context);
+    double h = getHeight(context);
 
     return SingleChildScrollView(
       padding: EdgeInsets.all(20),

@@ -10,3 +10,6 @@ void clearSelPlaces(BuildContext context) async{
   }
   Provider.of<UserPlacesNotifier>(context, listen: false).clearPlaceIds();
 }
+
+double getWidth(BuildContext context) => MediaQuery.of(context).size.width;
+double getHeight(BuildContext context) => MediaQuery.of(context).size.height;

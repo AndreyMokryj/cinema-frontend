@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutterappweb/database/database.dart';
 import 'package:flutterappweb/helpers/styles.dart';
+import 'package:flutterappweb/helpers/utils.dart';
 import 'package:flutterappweb/model/notifiers/login_notifier.dart';
 import 'package:flutterappweb/model/user_model.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,8 @@ class _LoginPageState extends State<LoginPage> {
       Provider.of<LoginNotifier>(context, listen: false).logOut();
     });
 
+    double w = getWidth(context);
+
     return WillPopScope(
       onWillPop: (){
         Navigator.of(context).pushNamed('/');
@@ -39,12 +42,10 @@ class _LoginPageState extends State<LoginPage> {
                   TextFormField(
                     style: fieldTextStyle,
                     enabled: true,
-//                  decoration: AppDecoration(
-//                    labelText: AppLocalizations.of(context).localizedText(
-//                      'signInEnterLoginText'),
-//                    hintText: AppLocalizations.of(context).localizedText(
-//                      'signInEnterLoginHint'),
-//                  ),
+                  decoration: AppDecoration(
+                    labelText: "",
+                    hintText: "",
+                  ),
                     keyboardType: TextInputType.emailAddress,
 //                  validator: (val) =>
 //                    fieldError('username', val.isEmpty ? AppLocalizations.of(
@@ -56,14 +57,10 @@ class _LoginPageState extends State<LoginPage> {
                   TextFormField(
                     style: fieldTextStyle,
                     enabled: true,
-//                  decoration: AppDecoration(
-////                    labelText: 'Password',
-////                    hintText: 'Пароль для входа'
-//                    labelText: AppLocalizations.of(context).localizedText(
-//                      'signInEnterPasswordText'),
-//                    hintText: AppLocalizations.of(context).localizedText(
-//                      'signInEnterPasswordHint'),
-//                  ),
+                  decoration: AppDecoration(
+                    labelText: 'Password',
+                    hintText: 'Пароль для входа'
+                  ),
                     obscureText: true,
 //                  validator: (val) =>
 //                    fieldError('password', val.isEmpty ? AppLocalizations.of(
