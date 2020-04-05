@@ -12,7 +12,12 @@ class MovieGrid extends StatelessWidget{
       padding: EdgeInsets.zero,
       child: Column(
         children: <Widget>[
-          Expanded(child: Image.network(movie.imageLink,)),
+          Expanded(
+            child: Image.network(
+              movie.imageLink,
+              fit: BoxFit.fitHeight,
+            )
+          ),
           SizedBox(
             height: 5,
           ),

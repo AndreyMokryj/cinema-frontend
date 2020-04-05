@@ -61,21 +61,24 @@ class MainView extends StatelessWidget {
                   ) : Container(),
                   Expanded(
                     flex: 4,
-                    child: Builder(
-                      builder: (context) {
-                        switch (name) {
-                          case 'cart':
-                            return ShoppingCart();
-                            break;
-                          case 'details':
-                            return MoviePage(
-                              movie: movie,
-                            );
-                            break;
-                          default:
-                            return MovieList();
-                        }
-                      },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Builder(
+                        builder: (context) {
+                          switch (name) {
+                            case 'cart':
+                              return ShoppingCart();
+                              break;
+                            case 'details':
+                              return MoviePage(
+                                movie: movie,
+                              );
+                              break;
+                            default:
+                              return MovieList();
+                          }
+                        },
+                      ),
                     ),
                   ),
                 ],
