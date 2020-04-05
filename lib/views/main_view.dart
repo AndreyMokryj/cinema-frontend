@@ -36,9 +36,45 @@ class MainView extends StatelessWidget {
           if (snapshot.hasData || movieId == null) {
             return Scaffold(
               appBar: AppBar(
-                automaticallyImplyLeading: movieId != null,
+                leading: Row(
+                  children: <Widget>[
+                    w <= 800 ?
+                    IconButton(
+                      icon: Icon(Icons.menu),
+                      onPressed: (){
+                        Scaffold.of(context).openDrawer();
+                      },
+                    ) : Container(),
+
+                    movieId != null ?
+                    IconButton(
+                      icon: Icon(Icons.arrow_back),
+                      onPressed: (){
+                        Navigator.of(context).pop();
+                      },
+                    ) : Container(),
+                  ],
+                ),
+                automaticallyImplyLeading: false,
                 title: Text(title ?? pageNames[name]),
                 centerTitle: true,
+//                actions: <Widget>[
+//                  w <= 800 ?
+//                  IconButton(
+//                    icon: Icon(Icons.menu),
+//                    onPressed: (){
+//                      Scaffold.of(context).openDrawer();
+//                    },
+//                  ) : Container(),
+//
+//                  movieId != null ?
+//                  IconButton(
+//                    icon: Icon(Icons.arrow_back),
+//                    onPressed: (){
+//                      Navigator.of(context).pop();
+//                    },
+//                  ) : Container(),
+//                ],
               ),
               body: Row(
                 children: <Widget>[
@@ -68,6 +104,10 @@ class MainView extends StatelessWidget {
                   ),
                 ],
               ),
+
+              drawer: w <= 800 ? Drawer(
+                child: MenuWidget(),
+              ) : null,
             );
           }
           else{
