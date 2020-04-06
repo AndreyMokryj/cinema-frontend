@@ -9,6 +9,10 @@ import 'package:flutterappweb/model/user_model.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget{
+  final bool created;
+
+  const LoginPage({Key key, this.created = false}) : super(key: key);
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -31,6 +35,11 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       Provider.of<LoginNotifier>(context, listen: false).logOut();
+      if (widget.created){
+        Scaffold.of(context).showSnackBar(
+          SnackBar(content: Text("Новый пользователь создан!")),
+        );
+      }
     });
 
     double w = getWidth(context);
@@ -104,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                             fontSize: 14.0,
                             color: Colors.black),),
                         onPressed: () => Navigator.of(context).pushNamed('/signup'),
-                      )
+                      ),
                     ],
                   ),
                 ),

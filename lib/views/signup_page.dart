@@ -60,7 +60,8 @@ class _SignupPageState extends State<SignupPage> {
                           hintText: "Имя пользователя",
                         ),
                         keyboardType: TextInputType.emailAddress,
-                        validator: (val) => val.isEmpty ? "Введите имя пользователя" : null,
+                        validator: (val) => val.isEmpty ? "Введите имя пользователя" :
+                          val.length < 5 ? "Должно содержать минимум 5 символов" : null,
                         autovalidate: validate,
                         onSaved: (val) => newUser.username = val,
                       ),
@@ -73,7 +74,8 @@ class _SignupPageState extends State<SignupPage> {
                           hintText: 'Пароль для входа'
                         ),
                         obscureText: true,
-                        validator: (val) => val.isEmpty ? "Введите пароль" : null,
+                        validator: (val) => val.isEmpty ? "Введите пароль" :
+                        val.length < 5 ? "Должно содержать минимум 5 символов" : null,
                         autovalidate: validate,
                         onSaved: (val) => newUser.password = val,
                       ),
@@ -107,7 +109,7 @@ class _SignupPageState extends State<SignupPage> {
     if (form.validate()) {
       form.save();
       if (await DBProvider.db.newUser(newUser)) {
-        Navigator.of(context).pushNamed('/login');
+        Navigator.of(context).pushNamed('/login', arguments: "created");
       }
       else {
         setState(() {

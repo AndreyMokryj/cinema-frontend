@@ -75,7 +75,9 @@ Route<dynamic> _getRoute(RouteSettings settings) {
         );
         break;
       case '/login' :
-        page = LoginPage();
+        page = LoginPage(
+          created: ((settings.arguments ?? "") as String) == "created",
+        );
         break;
       case '/signup' :
         page = SignupPage();
@@ -90,7 +92,7 @@ Route<dynamic> _getRoute(RouteSettings settings) {
 
   return MaterialPageRoute<void>(
     settings: settings,
-    builder: (BuildContext context) => page,
+    builder: (BuildContext context) => Scaffold(body: page),
     // fullscreenDialog: true,
   );
 }
