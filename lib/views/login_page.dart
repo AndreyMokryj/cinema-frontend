@@ -17,6 +17,15 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
   User newUser = User();
+  bool validate;
+  String errorMsg;
+
+  @override
+  void initState() {
+    validate = false;
+    errorMsg = "";
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,20 +51,20 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       Text('Введите имя пользователя и пароль',
-                        style: TextStyle(fontSize: 14.0)),
+                        style: normalTextStyle,
+                        textAlign: TextAlign.center,
+                      ),
                       const SizedBox(height: 12.0),
                       TextFormField(
                         style: fieldTextStyle,
                         enabled: true,
                         decoration: AppDecoration(
                           labelText: "Имя пользователя",
-                          hintText: "",
+                          hintText: "Имя пользователя",
                         ),
                         keyboardType: TextInputType.emailAddress,
-//                  validator: (val) =>
-//                    fieldError('username', val.isEmpty ? AppLocalizations.of(
-//                      context).localizedText('signInNoLoginError') : null),
-                        autovalidate: true,
+                        validator: (val) => val.isEmpty ? "Введите имя пользователя" : null,
+                        autovalidate: validate,
                         onSaved: (val) => newUser.username = val,
                       ),
                       const SizedBox(height: 20.0),
@@ -67,14 +76,18 @@ class _LoginPageState extends State<LoginPage> {
                           hintText: 'Пароль для входа'
                         ),
                         obscureText: true,
-//                  validator: (val) =>
-//                    fieldError('password', val.isEmpty ? AppLocalizations.of(
-//                      context).localizedText('signInNoPasswordError') : null),
-                        autovalidate: true,
+                        validator: (val) => val.isEmpty ? "Введите пароль" : null,
+                        autovalidate: validate,
                         onSaved: (val) => newUser.password = val,
-
                       ),
-                      const SizedBox(height: 20.0),
+                      SizedBox(height: 15.0),
+                      Text(
+                        errorMsg,
+                        style: errorTextStyle,
+//                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 15.0),
+
                       FlatButton(
                         //text: 'Войти',
                         child: Text(
@@ -83,8 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                         onPressed: () => _submit(),
 
                       ),
-                      const SizedBox(height: 11.0),
-                      const SizedBox(height: 27.0),
+                      const SizedBox(height: 35.0),
                       FlatButton(
                         child: Text('Зарегистрироваться',
                           style: TextStyle(fontFamily: 'PT Sans',
@@ -104,11 +116,23 @@ class _LoginPageState extends State<LoginPage> {
 
   void _submit() async {
     final FormState form = _formKey.currentState;
-    form.save();
-    bool s = await DBProvider.db.checkUser(newUser);
-    if (s) {
-      Provider.of<LoginNotifier>(context, listen: false).logIn(newUser);
-      Navigator.of(context).pushNamed('/');
+    if (form.validate()) {
+      form.save();
+      bool s = await DBProvider.db.checkUser(newUser);
+      if (s) {
+        Provider.of<LoginNotifier>(context, listen: false).logIn(newUser);
+        Navigator.of(context).pushNamed('/');
+      }
+      else{
+        setState(() {
+          errorMsg = "Неправильное имя пользователя или пароль.";
+        });
+      }
+    }
+    else {
+      setState(() {
+        validate = true;
+      });
     }
   }
 }
