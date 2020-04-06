@@ -14,8 +14,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => LoginNotifier(),
+    return ChangeNotifierProvider.value(
+      value: globalLoginNotifier,
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
@@ -60,7 +60,7 @@ class MainPage extends StatelessWidget {
 Route<dynamic> _getRoute(RouteSettings settings) {
   Widget page;
   final path = settings.name;
-  if(path.startsWith('/details/')){
+  if (path.startsWith('/details/')) {
     String id = path.substring(9);
     page = MainPage(
       name: 'details',
@@ -75,6 +75,7 @@ Route<dynamic> _getRoute(RouteSettings settings) {
         );
         break;
       case '/login' :
+        globalLoginNotifier.logOut();
         page = LoginPage(
           created: ((settings.arguments ?? "") as String) == "created",
         );
@@ -93,6 +94,7 @@ Route<dynamic> _getRoute(RouteSettings settings) {
   return MaterialPageRoute<void>(
     settings: settings,
     builder: (BuildContext context) => Scaffold(body: page),
-    // fullscreenDialog: true,
   );
 }
+
+final globalLoginNotifier = LoginNotifier();
