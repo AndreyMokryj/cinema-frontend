@@ -48,7 +48,8 @@ class _LoginPageState extends State<LoginPage> {
               child: Center(
                 child: Container(
                   width: w > smallLimit ? 500 : w,
-                  child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       Text('Введите имя пользователя и пароль',
                         style: normalTextStyle,
