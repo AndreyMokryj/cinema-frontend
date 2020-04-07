@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider.value(
       value: globalLoginNotifier,
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Кинотеатр FORMAT',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),

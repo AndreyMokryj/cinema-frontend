@@ -29,26 +29,14 @@ class _OrderWidgetState extends State<OrderWidget> {
     return Row(
       children: <Widget>[
         Expanded(
-          child: Text('Заказ #${order.id} - ${order.placeIds
-            .length} билета(ов) на сумму ${order.sum} грн.'),
+          child: Container(
+            padding: EdgeInsets.all(15),
+            child: Text('Заказ #${order.id} - ${order.placeIds
+              .length} билета(ов) на сумму ${order.sum} грн.'),
+          ),
         ),
 
         order.status == 0 ?
-//        Column(
-//          children: <Widget>[
-//            FlatButton(
-//              padding: EdgeInsets.zero,
-//              child: Text('Оплатить'),
-//              onPressed: _payOrder,
-//            ),
-//
-//            FlatButton(
-//              padding: EdgeInsets.zero,
-//              child: Text('Отменить'),
-//              onPressed: _cancelOrder,
-//            ),
-//          ],
-//        )
         OrderButtons(
           buttons: <Widget>[
             FlatButton(
