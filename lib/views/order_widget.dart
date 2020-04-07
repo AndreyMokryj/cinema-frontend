@@ -40,11 +40,17 @@ class _OrderWidgetState extends State<OrderWidget> {
         OrderButtons(
           buttons: <Widget>[
             FlatButton(
+              color: Colors.green,
               padding: EdgeInsets.zero,
               child: Text('Оплатить'),
               onPressed: _payOrder,
             ),
+            SizedBox(
+              width: 3,
+              height: 3,
+            ),
             FlatButton(
+              color: Colors.red,
               padding: EdgeInsets.zero,
               child: Text('Отменить'),
               onPressed: _cancelOrder,
