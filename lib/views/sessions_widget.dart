@@ -29,58 +29,66 @@ class _SessionsWidgetState extends State<SessionsWidget> {
   Widget build(BuildContext context) {
     double w = getWidth(context);
     double h = getHeight(context);
-    User user = Provider.of<LoginNotifier>(context).user;
+    User user = Provider
+      .of<LoginNotifier>(context)
+      .user;
 
     return ChangeNotifierProvider(
-      create: (context) => UserPlacesNotifier()..init(user),
+      create: (context) =>
+      UserPlacesNotifier()
+        ..init(user),
       child: Column(
-          children: <Widget>[
-            FutureBuilder(
-              future: DBProvider.db.getSessions(widget.movie.id),
-              builder: (context, snapshot){
-                if (snapshot.hasData){
-                  final sessionMaps = snapshot.data as List;
+        children: <Widget>[
+          FutureBuilder(
+            future: DBProvider.db.getSessions(widget.movie.id),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                final sessionMaps = snapshot.data as List;
 
-                  return Column(
-                    children: <Widget>[
-                      Text('Выберите сеанс:'),
-                      ListView(
-                        physics: null,
-                        primary: false,
-                        shrinkWrap: true,
-                        children: sessionMaps.map((e) {
-                          Session session = Session.fromMap(e);
-                          return ListTile(
-                            title: Text(session.formatDate()),
-                            onTap: () {
-                              clearSelPlaces(context);
-                              setState(() {
-                                selectedSession = session;
-                              });
-                            },
-                            selected: selectedSession?.id == session.id,
-                          );
-                        }).toList(),
-                      ),
-                    ],
-                  );
-                }
-                else {
-                  return Container(
-                    child: Text('Нет свободных сеансов'),
-                  );
-                }
-              },
-            ),
+                return Column(
+                  children: <Widget>[
+                    Text('Выберите сеанс:'),
+                    ListView(
+                      physics: null,
+                      primary: false,
+                      shrinkWrap: true,
+                      children: sessionMaps.map((e) {
+                        Session session = Session.fromMap(e);
+                        return ListTile(
+                          title: Text(session.formatDate()),
+                          onTap: () {
+                            clearSelPlaces(context);
+                            setState(() {
+                              selectedSession = session;
+                            });
+                          },
+                          selected: selectedSession?.id == session.id,
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                );
+              }
+              else {
+                return Container(
+                  child: Text('Нет свободных сеансов'),
+                );
+              }
+            },
+          ),
 
-            selectedSession != null ?
-            FutureBuilder(
-              future: DBProvider.db.getPlaces(selectedSession.id),
-              builder: (context, snapshot){
-                if (snapshot.hasData && snapshot.connectionState == ConnectionState.done){
-                  var places = Place.getSortedFromMaps(snapshot.data);
+          selectedSession != null ?
+          FutureBuilder(
+            future: DBProvider.db.getPlaces(selectedSession.id),
+            builder: (context, snapshot) {
+              if (snapshot.hasData &&
+                snapshot.connectionState == ConnectionState.done) {
+                var places = Place.getSortedFromMaps(snapshot.data);
 
-                  return Container(
+                return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Container(
+                    width: 1100,
                     child: GridView.count(
                       physics: null,
                       primary: false,
@@ -88,68 +96,72 @@ class _SessionsWidgetState extends State<SessionsWidget> {
                       crossAxisCount: 20,
                       crossAxisSpacing: 3,
                       mainAxisSpacing: 3,
-                      children: places.map((e) => PlaceWidget(
-                        place: e,
-                        user: Provider.of<LoginNotifier>(context).user,
-                      )).toList(),
+                      children: places.map((e) =>
+                        PlaceWidget(
+                          place: e,
+                          user: Provider
+                            .of<LoginNotifier>(context)
+                            .user,
+                        ),).toList(),
                     ),
-                  );
-                }
-                else {
-                  return Container(
-                    height: 350,
-                  );
-                }
-              },
-            )
+                  ),
+                );
+              }
+              else {
+                return Container(
+                  height: 350,
+                );
+              }
+            },
+          )
             : Container(),
 
-            Consumer<UserPlacesNotifier>(
-              builder: (context, userPlacesNotifier, __){
-                if(selectedSession != null) {
-                  int sum = selectedSession.price *
-                    userPlacesNotifier.placeIds.length;
-                  return Column(
-                    children: <Widget>[
-                      Text('Сумма $sum грн.'),
+          Consumer<UserPlacesNotifier>(
+            builder: (context, userPlacesNotifier, __) {
+              if (selectedSession != null) {
+                int sum = selectedSession.price *
+                  userPlacesNotifier.placeIds.length;
+                return Column(
+                  children: <Widget>[
+                    Text('Сумма $sum грн.'),
 
-                      (userPlacesNotifier.placeIds.length ?? 0) > 0 ?
-                      Container(
-                        child: FlatButton(
-                          padding: EdgeInsets.zero,
-                          child: Text("Купить!"),
-                          onPressed: () async {
-                            bool s = await DBProvider.db.bookOrder(Order(
-                              username: userPlacesNotifier.user.username,
-                              placeIds: userPlacesNotifier.placeIds,
-                              sum: sum,
-                            ));
-                            if (s) {
-                              userPlacesNotifier.clearPlaceIds();
-                              Navigator.of(context).pushNamed('/cart');
-                            }
-                            else {
-                              Navigator.of(context).pushReplacementNamed(
-                                '/details/${widget.movie.id}');
-                            }
-                          },
-                        ),
-                      )
-                        : Container(
-                        height: 200,
+                    (userPlacesNotifier.placeIds.length ?? 0) > 0 ?
+                    Container(
+                      child: FlatButton(
+                        padding: EdgeInsets.zero,
+                        child: Text("Купить!"),
+                        onPressed: () async {
+                          bool s = await DBProvider.db.bookOrder(Order(
+                            username: userPlacesNotifier.user.username,
+                            placeIds: userPlacesNotifier.placeIds,
+                            sum: sum,
+                          ));
+                          if (s) {
+                            userPlacesNotifier.clearPlaceIds();
+                            Navigator.of(context).pushNamed('/cart');
+                          }
+                          else {
+                            Navigator.of(context).pushReplacementNamed(
+                              '/details/${widget.movie.id}');
+                          }
+                        },
                       ),
-                    ],
-                  );
-                }
-                else{
-                  return Container(
-                    height: 200,
-                  );
-                }
-              },
-            ),
-          ],
-        ),
+                    )
+                      : Container(
+                      height: 200,
+                    ),
+                  ],
+                );
+              }
+              else {
+                return Container(
+                  height: 200,
+                );
+              }
+            },
+          ),
+        ],
+      ),
     );
   }
 }
