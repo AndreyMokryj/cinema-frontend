@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterappweb/database/database.dart';
+import 'package:flutterappweb/helpers/styles.dart';
 import 'package:flutterappweb/helpers/utils.dart';
 import 'package:flutterappweb/model/notifiers/login_notifier.dart';
 import 'package:flutterappweb/model/movie_model.dart';
@@ -85,26 +86,35 @@ class _SessionsWidgetState extends State<SessionsWidget> {
                 snapshot.connectionState == ConnectionState.done) {
                 var places = Place.getSortedFromMaps(snapshot.data);
 
-                return SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Container(
-                    width: 1100,
-                    child: GridView.count(
-                      physics: null,
-                      primary: false,
-                      shrinkWrap: true,
-                      crossAxisCount: 20,
-                      crossAxisSpacing: 3,
-                      mainAxisSpacing: 3,
-                      children: places.map((e) =>
-                        PlaceWidget(
-                          place: e,
-                          user: Provider
-                            .of<LoginNotifier>(context)
-                            .user,
-                        ),).toList(),
+                return Column(
+                  children: <Widget>[
+                    Text(
+                      'Выберите места:',
+                      style: normalTextStyle,
                     ),
-                  ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Container(
+                        margin: EdgeInsets.all(20),
+                        width: 900,
+                        child: GridView.count(
+                          physics: null,
+                          primary: false,
+                          shrinkWrap: true,
+                          crossAxisCount: 20,
+                          crossAxisSpacing: 3,
+                          mainAxisSpacing: 3,
+                          children: places.map((e) =>
+                            PlaceWidget(
+                              place: e,
+                              user: Provider
+                                .of<LoginNotifier>(context)
+                                .user,
+                            ),).toList(),
+                        ),
+                      ),
+                    ),
+                  ],
                 );
               }
               else {

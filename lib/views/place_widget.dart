@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterappweb/database/database.dart';
+import 'package:flutterappweb/helpers/styles.dart';
 import 'package:flutterappweb/model/place_model.dart';
 import 'package:flutterappweb/model/user_model.dart';
 import 'package:flutterappweb/model/notifiers/user_places_notifier.dart';
@@ -57,7 +58,10 @@ class _PlaceWidgetState extends State<PlaceWidget> {
       ),
       child: FlatButton(
         padding: EdgeInsets.zero,
-        child: Text('${widget.place.row} - ${widget.place.column}'),
+        child: Text(
+          '${widget.place.row} - ${widget.place.column}',
+          style: littleTextStyle,
+        ),
 
         onPressed: placeStatus == PlaceStatus.FREE ? (){
           _selectPlace(context);
