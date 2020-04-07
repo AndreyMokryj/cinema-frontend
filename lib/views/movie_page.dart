@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterappweb/helpers/constants.dart';
 import 'package:flutterappweb/helpers/utils.dart';
 import 'package:flutterappweb/model/movie_model.dart';
 import 'package:flutterappweb/views/sessions_widget.dart';
@@ -18,13 +19,14 @@ class MoviePage extends StatelessWidget{
       child: Column(
         children: <Widget>[
           Container(
-            height: h * 0.8,
+            padding: EdgeInsets.all(1),
+            height: w > smallLimit ? h * 0.8 : null,
+            width: w > smallLimit ? null : w * 0.9,
             child: Image.network(
               movie.imageLink,
-              fit: BoxFit.fitHeight,
+              fit: w > smallLimit ? BoxFit.fitHeight : BoxFit.fitWidth,
             ),
           ),
-
 
           SizedBox(
             height: 20,
