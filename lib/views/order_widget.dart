@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterappweb/database/database.dart';
 import 'package:flutterappweb/model/order_model.dart';
+import 'package:flutterappweb/views/order_buttons.dart';
 
 class OrderWidget extends StatefulWidget{
   final Order order;
@@ -33,14 +34,28 @@ class _OrderWidgetState extends State<OrderWidget> {
         ),
 
         order.status == 0 ?
-        Column(
-          children: <Widget>[
+//        Column(
+//          children: <Widget>[
+//            FlatButton(
+//              padding: EdgeInsets.zero,
+//              child: Text('Оплатить'),
+//              onPressed: _payOrder,
+//            ),
+//
+//            FlatButton(
+//              padding: EdgeInsets.zero,
+//              child: Text('Отменить'),
+//              onPressed: _cancelOrder,
+//            ),
+//          ],
+//        )
+        OrderButtons(
+          buttons: <Widget>[
             FlatButton(
               padding: EdgeInsets.zero,
               child: Text('Оплатить'),
               onPressed: _payOrder,
             ),
-
             FlatButton(
               padding: EdgeInsets.zero,
               child: Text('Отменить'),
