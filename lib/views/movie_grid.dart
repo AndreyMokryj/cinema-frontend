@@ -8,25 +8,27 @@ class MovieGrid extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      padding: EdgeInsets.zero,
-      child: Column(
-        children: <Widget>[
-          Expanded(
-            child: Image.network(
-              movie.imageLink,
-              fit: BoxFit.fitHeight,
-            )
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Text("${movie.name} /\n${movie.nameOriginal}"),
-        ],
+    return Align(
+      child: FlatButton(
+        padding: EdgeInsets.zero,
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: Image.network(
+                movie.imageLink,
+                fit: BoxFit.fitHeight,
+              )
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Text("${movie.name} /\n${movie.nameOriginal}"),
+          ],
+        ),
+        onPressed: (){
+          Navigator.of(context).pushNamed('/details/${movie.id}');
+        },
       ),
-      onPressed: (){
-        Navigator.of(context).pushNamed('/details/${movie.id}');
-      },
     );
   }
 }
