@@ -1,4 +1,6 @@
-const baseUrl = "http://localhost:4444/";
+import 'package:flutter/foundation.dart';
+
+const baseUrl = kReleaseMode ? "https://mavlabs.hopto.org/" : "http://localhost:4444/" ;
 
 const pageNames = {
   'home' : 'Главная',
