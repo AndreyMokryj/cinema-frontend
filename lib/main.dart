@@ -45,7 +45,6 @@ class MainPage extends StatelessWidget {
       }
     });
     if (loggedIn) {
-
       return MainView(
         name: name,
         movieId: movieId,
@@ -81,6 +80,7 @@ Route<dynamic> _getRoute(RouteSettings settings) {
         );
         break;
       case '/signup' :
+        globalLoginNotifier.logOut();
         page = SignupPage();
         break;
       case '/cart' :
